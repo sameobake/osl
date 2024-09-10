@@ -1,0 +1,16 @@
+shader directionalFacingRatioShader(
+    float weight = 1.0,
+    vector targetPotision = vector(0.0, 1.0, 0.0),
+    float inputMin = -1.0,
+    float inputMax = 1.0,
+    float outputMin = 0.0,
+    float outputMax = 1.0,
+    output color outColor = color(0)
+)
+{
+    vector nDirection = normalize(vector(0.0, 0.0, 0.0) - targetPotision);
+    float facingRatio = dot(N, normalize(P - (P + nDirection)) * weight);
+    float normalizedRatio = (facingRatio - inputMin) / (inputMax - inputMin);
+    float remappedFacingRatio = outputMin + normalizedRatio * (outputMax - outputMin);
+    outColor = color(remappedFacingRatio, remappedFacingRatio, remappedFacingRatio);
+} 
